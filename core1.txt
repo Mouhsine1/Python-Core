@@ -1,0 +1,106 @@
+service password-encryption
+service compress-config
+!
+hostname C1
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$NVTP$W62efwGB1dbigDYZT5cRr0
+enable password axians
+!
+username mouhsine privilege 15 password 0 hgt
+username pdv privilege 15 password 0 hgt
+aaa new-model
+!
+aaa session-id common
+clock timezone EET 2 0
+!
+no ip domain-lookup
+ip domain-name axians.com
+ip cef
+no ipv6 cef
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+interface Port-channel1
+ no switchport
+ ip address 10.10.10.2 255.255.255.252
+!
+interface Ethernet0/0
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode on
+!
+interface Ethernet0/1
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode on
+!
+interface Ethernet0/2
+ no switchport
+ ip address 172.16.1.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet0/3
+ no switchport
+ ip address 172.16.2.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet1/0
+ no switchport
+ ip address 172.16.3.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet1/1
+ no switchport
+ ip address 172.16.4.1 255.255.255.252
+ duplex auto
+!
+interface Ethernet1/2
+ shutdown
+!
+interface Ethernet1/3
+ shutdown
+!
+interface Ethernet2/0
+ shutdown
+!
+interface Ethernet2/1
+ shutdown
+!
+interface Ethernet2/2
+ shutdown
+!
+interface Ethernet2/3
+ shutdown
+!
+interface Ethernet3/0
+ shutdown
+!
+interface Ethernet3/1
+ shutdown
+!
+interface Ethernet3/2
+ shutdown
+!
+interface Ethernet3/3
+ shutdown
+!
+!
+router eigrp 1
+ network 10.10.10.0 0.0.0.255
+ network 172.16.1.0 0.0.0.255
+ network 172.16.2.0 0.0.0.255
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+

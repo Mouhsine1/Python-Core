@@ -1,0 +1,86 @@
+service password-encryption
+service compress-config
+!
+hostname C2
+
+!
+no aaa new-model
+clock timezone EET 2 0
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+interface Port-channel1
+ no switchport
+ ip address 10.10.10.1 255.255.255.252
+!
+interface Ethernet0/0
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode on
+!
+interface Ethernet0/1
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode on
+!
+interface Ethernet0/2
+ no switchport
+ ip address 172.16.5.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet0/3
+ no switchport
+ ip address 172.16.6.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet1/0
+ no switchport
+ ip address 172.16.7.1 255.255.255.0
+ duplex auto
+!
+interface Ethernet1/1
+ no switchport
+ ip address 172.16.8.1 255.255.255.252
+ duplex auto
+!
+interface Ethernet1/2
+ shutdown
+interface Ethernet1/3
+ shutdown
+interface Ethernet2/0
+ shutdown
+interface Ethernet2/1
+ shutdown
+interface Ethernet2/2
+ shutdown
+interface Ethernet2/3
+ shutdown
+interface Ethernet3/0
+ shutdown
+interface Ethernet3/1
+ shutdown
+interface Ethernet3/2
+ shutdown
+interface Ethernet3/3
+ shutdown
+!
+router eigrp 1
+ network 10.10.10.0 0.0.0.255
+ network 172.16.5.0 0.0.0.255
+ network 172.16.6.0 0.0.0.255
+ network 172.16.7.0 0.0.0.255
+ network 172.16.8.0 0.0.0.255
+
+!
+control-plane
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
